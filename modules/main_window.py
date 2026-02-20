@@ -13,25 +13,21 @@ from PyQt6.QtGui import QAction
 from PyQt6.QtCore import Qt
 
 from modules.config_manager import ConfigManager
-from modules.editor_tab import EditorTab
-from modules.library_tab import LibraryTab
-from modules.search_tab import SearchTab
-from modules.settings_tab import SettingsTab
+from modules.theme import (
+    BG_DARK, BG_MEDIUM, BG_LIGHT,
+    FG_PRIMARY, FG_SECONDARY, FG_DIM,
+    ACCENT, ACCENT_GREEN, ACCENT_ORANGE, ERROR_RED, WARN_ORANGE,
+)
 
 logger = logging.getLogger(__name__)
 
-# ── Colour constants (import from here in other modules) ─────────────────────
-BG_DARK     = "#1e1e1e"
-BG_MEDIUM   = "#252526"
-BG_LIGHT    = "#2d2d30"
-FG_PRIMARY  = "#d4d4d4"
-FG_SECONDARY = "#9d9d9d"
-FG_DIM      = "#5a5a5a"
-ACCENT      = "#569cd6"
-ACCENT_GREEN = "#4ec9b0"
-ACCENT_ORANGE = "#ce9178"
-ERROR_RED   = "#f44747"
-WARN_ORANGE = "#dcdcaa"
+# Re-export so existing code that did `from modules.main_window import BG_DARK` still works
+__all__ = [
+    "BG_DARK", "BG_MEDIUM", "BG_LIGHT",
+    "FG_PRIMARY", "FG_SECONDARY", "FG_DIM",
+    "ACCENT", "ACCENT_GREEN", "ACCENT_ORANGE", "ERROR_RED", "WARN_ORANGE",
+    "APP_STYLESHEET", "MainWindow",
+]
 
 APP_STYLESHEET = f"""
 QMainWindow, QDialog {{
@@ -159,6 +155,12 @@ class MainWindow(QMainWindow):
     # ── Tabs ─────────────────────────────────────────────────────────────────
 
     def _build_tabs(self):
+        # Deferred imports break the circular dependency
+        from modules.editor_tab   import EditorTab
+        from modules.library_tab  import LibraryTab
+        from modules.search_tab   import SearchTab
+        from modules.settings_tab import SettingsTab
+
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
 

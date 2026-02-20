@@ -22,10 +22,10 @@ from PyQt6.QtGui import QFont, QColor, QTextCursor
 from modules.validator import SkillValidator, ValidationResult
 from modules.skill_io import SkillIO
 from modules.syntax_highlighter import SkillHighlighter
-from modules.main_window import (
+from modules.theme import (
     BG_DARK, BG_MEDIUM, BG_LIGHT,
     FG_PRIMARY, FG_SECONDARY, FG_DIM,
-    ACCENT, ACCENT_GREEN, ERROR_RED, WARN_ORANGE
+    ACCENT, ACCENT_GREEN, ERROR_RED, WARN_ORANGE,
 )
 
 logger = logging.getLogger(__name__)

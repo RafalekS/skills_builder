@@ -1,0 +1,15 @@
+"""
+Theme - colour constants shared across all modules
+"""
+
+BG_DARK      = "#1e1e1e"
+BG_MEDIUM    = "#252526"
+BG_LIGHT     = "#2d2d30"
+FG_PRIMARY   = "#d4d4d4"
+FG_SECONDARY = "#9d9d9d"
+FG_DIM       = "#5a5a5a"
+ACCENT       = "#569cd6"
+ACCENT_GREEN = "#4ec9b0"
+ACCENT_ORANGE = "#ce9178"
+ERROR_RED    = "#f44747"
+WARN_ORANGE  = "#dcdcaa"
