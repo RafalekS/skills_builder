@@ -107,6 +107,11 @@ def main():
 
     _apply_dark_theme(app)
 
+    icon_path = Path(__file__).parent / "resources" / "skills_builder.png"
+    if icon_path.exists():
+        from PyQt6.QtGui import QIcon
+        app.setWindowIcon(QIcon(str(icon_path)))
+
     config = ConfigManager()
     window = MainWindow(config)
     window.show()

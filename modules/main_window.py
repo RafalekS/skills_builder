@@ -249,16 +249,19 @@ class MainWindow(QMainWindow):
 
     def _on_new_skill(self):
         self.tabs.setCurrentWidget(self.editor_tab)
-        self.set_status("Editor tab — create skills in Phase 3")
+        self.editor_tab.action_new()
 
     def _on_open_skill(self):
-        self.set_status("Open skill — coming in Phase 3")
+        self.tabs.setCurrentWidget(self.editor_tab)
+        self.editor_tab._open_skill()
 
     def _on_save(self):
-        self.set_status("Save — coming in Phase 3")
+        self.tabs.setCurrentWidget(self.editor_tab)
+        self.editor_tab.action_save()
 
     def _on_save_as(self):
-        self.set_status("Save As — coming in Phase 3")
+        self.tabs.setCurrentWidget(self.editor_tab)
+        self.editor_tab.action_save_as()
 
     def _on_import_zip(self):
         self.set_status("Import ZIP — coming in Phase 4")
