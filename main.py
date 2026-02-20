@@ -9,7 +9,7 @@ from pathlib import Path
 
 # ── App identity ──────────────────────────────────────────────────────────────
 APP_NAME    = "Skills Builder"
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.6.0"
 
 # ── Logging setup (before any Qt import) ─────────────────────────────────────
 def _setup_logging():

@@ -592,13 +592,27 @@ class EditorTab(QWidget):
         self.license_edit.setStyleSheet(f"""
             QComboBox {{
                 background-color: {BG_MEDIUM}; color: {FG_PRIMARY};
-                border: 1px solid #3a3a3d; border-radius: 3px; padding: 4px 6px;
+                border: 1px solid #3a3a3d; border-radius: 3px;
+                padding: 4px 24px 4px 6px;
             }}
             QComboBox:focus {{ border-color: {ACCENT}; }}
-            QComboBox::drop-down {{ border: none; width: 20px; }}
+            QComboBox::drop-down {{
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 20px;
+                border-left: 1px solid #3a3a3d;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }}
+            QComboBox::down-arrow {{
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid {FG_SECONDARY};
+            }}
             QComboBox QAbstractItemView {{
                 background-color: {BG_MEDIUM}; color: {FG_PRIMARY};
                 border: 1px solid {BG_LIGHT}; selection-background-color: {ACCENT};
+                outline: none;
             }}
         """)
         self.license_edit.currentTextChanged.connect(self._schedule_form_to_raw)
@@ -1140,11 +1154,23 @@ class EditorTab(QWidget):
         if hasattr(mw, "set_status"):
             mw.set_status(message)
 
-    # ── Public API (called from main_window menu) ─────────────────────────────
+    # ── Public API (called from main_window menu / settings) ─────────────────
 
-    def action_new(self):  self._new_skill()
-    def action_save(self): self._save()
+    def action_new(self):     self._new_skill()
+    def action_save(self):    self._save()
     def action_save_as(self): self._save_as()
+
+    def apply_settings(self):
+        """Re-apply editor font/size from current config (called when settings change)."""
+        family = self.config.get("editor.font_family", "Consolas")
+        size   = self.config.get("editor.font_size", 13)
+        self.raw_editor.setFont(QFont(family, size))
+        wrap = self.config.get("editor.wrap_lines", True)
+        self._apply_wrap(wrap)
+        if hasattr(self, "_wrap_cb"):
+            self._wrap_cb.blockSignals(True)
+            self._wrap_cb.setChecked(wrap)
+            self._wrap_cb.blockSignals(False)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

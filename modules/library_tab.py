@@ -177,6 +177,7 @@ class SkillScopeWidget(QWidget):
 
         self._table.itemSelectionChanged.connect(self._on_selection_changed)
         self._table.doubleClicked.connect(self._on_double_click)
+        self._table.horizontalHeader().sectionResized.connect(self._save_col_widths)
         splitter.addWidget(self._table)
 
         # Preview
@@ -228,6 +229,23 @@ class SkillScopeWidget(QWidget):
         layout.addLayout(btn_row)
 
         self._update_path_label()
+        self._restore_col_widths()
+
+    # ── Column width persistence ──────────────────────────────────────────────
+
+    def _col_config_key(self) -> str:
+        return f"table_state.library_{self.scope}"
+
+    def _save_col_widths(self):
+        widths = [self._table.columnWidth(i) for i in range(self._table.columnCount())]
+        self.config.set(self._col_config_key(), widths)
+        self.config.save()
+
+    def _restore_col_widths(self):
+        widths = self.config.get(self._col_config_key())
+        if widths and len(widths) == self._table.columnCount():
+            for i, w in enumerate(widths):
+                self._table.setColumnWidth(i, w)
 
     # ── Data ─────────────────────────────────────────────────────────────────
 
