@@ -266,16 +266,20 @@ class MainWindow(QMainWindow):
         self.editor_tab.action_save_as()
 
     def _on_import_zip(self):
-        self.set_status("Import ZIP — coming in Phase 4")
+        self.tabs.setCurrentWidget(self.library_tab)
+        self.library_tab._user_tab._import_zip()
 
     def _on_export_zip(self):
-        self.set_status("Export ZIP — coming in Phase 4")
+        self.tabs.setCurrentWidget(self.library_tab)
+        self.library_tab._user_tab._export_zip()
 
     def _on_validate(self):
-        self.set_status("Validate — coming in Phase 2")
+        self.tabs.setCurrentWidget(self.editor_tab)
+        self.editor_tab._run_validation()
 
     def _on_clear_cache(self):
-        self.set_status("Clear cache — coming in Phase 5")
+        if hasattr(self, "search_tab"):
+            self.search_tab.clear_cache()
 
     def _on_open_skills_folder(self):
         import subprocess
@@ -292,6 +296,8 @@ class MainWindow(QMainWindow):
         self.set_status(f"Opened {skills_dir}")
 
     def _on_refresh_library(self):
+        if hasattr(self, "library_tab"):
+            self.library_tab.refresh()
         self._refresh_skills_status()
         self.set_status("Library refreshed")
 

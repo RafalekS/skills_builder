@@ -9,7 +9,7 @@ from pathlib import Path
 
 # ── App identity ──────────────────────────────────────────────────────────────
 APP_NAME    = "Skills Builder"
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.4.0"
 
 # ── Logging setup (before any Qt import) ─────────────────────────────────────
 def _setup_logging():
@@ -113,7 +113,12 @@ def main():
         app.setWindowIcon(QIcon(str(icon_path)))
 
     config = ConfigManager()
-    window = MainWindow(config)
+
+    from modules.database import Database
+    db_path = Path(__file__).parent / "config" / "skills_builder.db"
+    db = Database(db_path)
+
+    window = MainWindow(config, db)
     window.show()
 
     logger.info("%s v%s started", APP_NAME, APP_VERSION)
