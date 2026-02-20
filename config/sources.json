@@ -1,0 +1,66 @@
+[
+  {
+    "owner": "anthropics",
+    "repo": "skills",
+    "description": "Official Anthropic example skills (16 skills: docx, pdf, pptx, xlsx, algorithmic-art, canvas-design, frontend-design, mcp-builder, skill-creator, webapp-testing, etc.)",
+    "skills_prefix": "skills/",
+    "type": "direct",
+    "enabled": true
+  },
+  {
+    "owner": "VoltAgent",
+    "repo": "awesome-agent-skills",
+    "description": "383+ skills from official engineering teams: Vercel, Cloudflare, Stripe, Supabase, Google, Microsoft, Hugging Face, Trail of Bits, Expo, Sentry, Anthropic, etc.",
+    "skills_prefix": null,
+    "type": "awesome",
+    "enabled": true
+  },
+  {
+    "owner": "travisvn",
+    "repo": "awesome-claude-skills",
+    "description": "Curated community skills list with architecture docs and comparison tables",
+    "skills_prefix": null,
+    "type": "awesome",
+    "enabled": true
+  },
+  {
+    "owner": "ComposioHQ",
+    "repo": "awesome-claude-skills",
+    "description": "78 SaaS app integrations (Salesforce, Jira, Slack, GitHub, Stripe, etc.) + curated community skills",
+    "skills_prefix": null,
+    "type": "awesome",
+    "enabled": true
+  },
+  {
+    "owner": "hesreallyhim",
+    "repo": "awesome-claude-code",
+    "description": "Broader Claude Code ecosystem: skills, hooks, slash commands, orchestrators, tooling",
+    "skills_prefix": null,
+    "type": "awesome",
+    "enabled": true
+  },
+  {
+    "owner": "BehiSecc",
+    "repo": "awesome-claude-skills",
+    "description": "Community skills with scientific, security, and health domains",
+    "skills_prefix": null,
+    "type": "awesome",
+    "enabled": true
+  },
+  {
+    "owner": "obra",
+    "repo": "superpowers-skills",
+    "description": "20+ battle-tested skills: TDD, debugging, code review, git worktrees, systematic root-cause tracing",
+    "skills_prefix": "skills/",
+    "type": "direct",
+    "enabled": true
+  },
+  {
+    "owner": "trailofbits",
+    "repo": "skills",
+    "description": "22 professional security skills: CodeQL, Semgrep, variant analysis, code auditing, vulnerability detection",
+    "skills_prefix": "skills/",
+    "type": "direct",
+    "enabled": true
+  }
+]

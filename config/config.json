@@ -1,0 +1,26 @@
+{
+  "app": {
+    "theme": "dark",
+    "window_width": 1200,
+    "window_height": 800,
+    "window_x": -1,
+    "window_y": -1,
+    "last_tab": 0
+  },
+  "skills": {
+    "user_skills_dir": "",
+    "project_skills_dir": ""
+  },
+  "github": {
+    "token": "",
+    "search_timeout": 10,
+    "cache_hours": 24
+  },
+  "editor": {
+    "font_family": "Consolas",
+    "font_size": 13,
+    "tab_width": 2,
+    "wrap_lines": true
+  },
+  "table_state": {}
+}

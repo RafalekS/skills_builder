@@ -4,13 +4,15 @@
 
 ---
 
-## Phase 1: Project Skeleton [PENDING]
-- [ ] `main.py` — QApplication, dark theme, empty MainWindow
-- [ ] `modules/main_window.py` — 4 tabs, menu bar, status bar
-- [ ] `modules/config_manager.py` — JSON config with dot-notation
-- [ ] `requirements.txt` — PyQt6, requests, PyYAML
-- [ ] `config/config.json` — default config
-- [ ] `config/sources.json` — pre-populated skill source repos
+## Phase 1: Project Skeleton [BUILT — NEEDS USER TEST]
+- [x] `main.py` — QApplication, dark theme, empty MainWindow, unhandled exception hook
+- [x] `modules/main_window.py` — 4 tabs, menu bar, status bar (3 segments), colour constants
+- [x] `modules/config_manager.py` — JSON config with dot-notation, deep merge with defaults
+- [x] `requirements.txt` — PyQt6, requests, PyYAML
+- [x] `config/config.json` — default config
+- [x] `config/sources.json` — 8 pre-populated skill source repos
+- [x] Stub tabs: editor, library, search, settings
+- [ ] **USER: run `python main.py` — verify window opens, tabs visible, status bar shows skills dir**
 
 ## Phase 2: Core Logic [PENDING]
 - [ ] `modules/validator.py` — frontmatter validation rules
