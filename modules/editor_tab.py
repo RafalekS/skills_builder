@@ -514,7 +514,10 @@ class EditorTab(QWidget):
         row.addWidget(btn("Open...",        "Open existing skill",          self._open_skill))
         row.addWidget(btn("Save",           "Save skill (Ctrl+S)",          self._save))
         row.addWidget(btn("Save As...",     "Save to new location",         self._save_as))
-        row.addWidget(btn("Backup & Save",  "Backup then save",             self._backup_and_save))
+        row.addWidget(btn("Backup & Save",
+                         "Creates a timestamped backup of the current SKILL.md in the backup/ folder,\n"
+                         "then saves the new version. Lets you roll back if you break something.",
+                         self._backup_and_save))
         row.addWidget(self._vsep())
         row.addWidget(btn("Templates...",   "Pick a starting template",     self._open_templates))
         row.addWidget(self._vsep())
@@ -579,10 +582,26 @@ class EditorTab(QWidget):
 
         # ── license ──
         layout.addWidget(QLabel("License", styleSheet=FORM_LABEL_STYLE))
-        self.license_edit = QLineEdit()
-        self.license_edit.setPlaceholderText("MIT / Apache-2.0 / Proprietary")
-        self.license_edit.setStyleSheet(INPUT_STYLE)
-        self.license_edit.textChanged.connect(self._schedule_form_to_raw)
+        self.license_edit = QComboBox()
+        self.license_edit.setEditable(True)
+        self.license_edit.addItems([
+            "", "MIT", "Apache-2.0", "GPL-3.0", "LGPL-3.0",
+            "BSD-2-Clause", "BSD-3-Clause", "ISC", "MPL-2.0",
+            "AGPL-3.0", "Proprietary", "See LICENSE.txt",
+        ])
+        self.license_edit.setStyleSheet(f"""
+            QComboBox {{
+                background-color: {BG_MEDIUM}; color: {FG_PRIMARY};
+                border: 1px solid #3a3a3d; border-radius: 3px; padding: 4px 6px;
+            }}
+            QComboBox:focus {{ border-color: {ACCENT}; }}
+            QComboBox::drop-down {{ border: none; width: 20px; }}
+            QComboBox QAbstractItemView {{
+                background-color: {BG_MEDIUM}; color: {FG_PRIMARY};
+                border: 1px solid {BG_LIGHT}; selection-background-color: {ACCENT};
+            }}
+        """)
+        self.license_edit.currentTextChanged.connect(self._schedule_form_to_raw)
         layout.addWidget(self.license_edit)
 
         # ── compatibility ──
@@ -786,7 +805,7 @@ class EditorTab(QWidget):
                     lines.append(f"  {line}")
             else:
                 lines.append(f"description: {desc}")
-        lic = self.license_edit.text().strip()
+        lic = self.license_edit.currentText().strip()
         if lic:
             lines.append(f"license: {lic}")
         compat = self.compat_edit.text().strip()
@@ -842,7 +861,7 @@ class EditorTab(QWidget):
         try:
             self.name_edit.setText(str(fm.get("name", "")))
             self.desc_edit.setPlainText(str(fm.get("description", "")))
-            self.license_edit.setText(str(fm.get("license", "")))
+            self.license_edit.setCurrentText(str(fm.get("license", "")))
             self.compat_edit.setText(str(fm.get("compatibility", "")))
 
             # allowed-tools
@@ -1259,12 +1278,11 @@ class TemplateDialog(QDialog):
         """)
         for name in TEMPLATES:
             self.list_widget.addItem(QListWidgetItem(name))
-        self.list_widget.currentRowChanged.connect(self._on_select)
-        self.list_widget.setCurrentRow(0)
+        # NOTE: connect AFTER self.preview is created to avoid AttributeError
         llayout.addWidget(self.list_widget)
         layout.addWidget(left)
 
-        # Right: preview
+        # Right: preview (built before connecting list signal)
         right = QWidget()
         rlayout = QVBoxLayout(right)
         rlayout.setContentsMargins(0, 0, 0, 0)
@@ -1284,6 +1302,10 @@ class TemplateDialog(QDialog):
         buttons.rejected.connect(self.reject)
         rlayout.addWidget(buttons)
         layout.addWidget(right)
+
+        # Connect and select now that self.preview exists
+        self.list_widget.currentRowChanged.connect(self._on_select)
+        self.list_widget.setCurrentRow(0)
 
     def _on_select(self, row: int):
         if row < 0:
