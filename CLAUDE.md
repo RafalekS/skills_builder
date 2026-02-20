@@ -425,16 +425,55 @@ GitHub search and import. Three modes accessible via QTabWidget sub-tabs:
 #### Sub-tab 1: Source Repos
 Browse skills from curated source repos. Pre-configured list in `config/sources.json`.
 
-Pre-populated sources:
+Pre-populated sources (stored in `config/sources.json`):
 ```json
 [
-  {"owner": "anthropics", "repo": "skills", "description": "Official Anthropic example skills", "skills_prefix": "skills/"},
-  {"owner": "travisvn", "repo": "awesome-claude-skills", "description": "Curated community skills list", "skills_prefix": null},
-  {"owner": "hesreallyhim", "repo": "awesome-claude-code", "description": "Awesome Claude Code resources", "skills_prefix": null},
-  {"owner": "obra", "repo": "superpowers-skills", "description": "Superpowers skills collection", "skills_prefix": "skills/"},
-  {"owner": "VoltAgent", "repo": "awesome-agent-skills", "description": "Agent skills collection", "skills_prefix": null}
+  {
+    "owner": "anthropics", "repo": "skills",
+    "description": "Official Anthropic example skills (16 skills: docx, pdf, pptx, xlsx, algorithmic-art, canvas-design, frontend-design, mcp-builder, skill-creator, webapp-testing, etc.)",
+    "skills_prefix": "skills/", "type": "direct"
+  },
+  {
+    "owner": "VoltAgent", "repo": "awesome-agent-skills",
+    "description": "383+ skills from official engineering teams: Vercel, Cloudflare, Stripe, Supabase, Google, Microsoft, Hugging Face, Trail of Bits, Expo, Sentry, Anthropic, etc.",
+    "skills_prefix": null, "type": "awesome"
+  },
+  {
+    "owner": "travisvn", "repo": "awesome-claude-skills",
+    "description": "Curated community skills list with architecture docs and comparison tables",
+    "skills_prefix": null, "type": "awesome"
+  },
+  {
+    "owner": "ComposioHQ", "repo": "awesome-claude-skills",
+    "description": "78 SaaS app integrations (Salesforce, Jira, Slack, GitHub, Stripe, etc.) + curated community skills",
+    "skills_prefix": null, "type": "awesome"
+  },
+  {
+    "owner": "hesreallyhim", "repo": "awesome-claude-code",
+    "description": "Broader Claude Code ecosystem: skills, hooks, slash commands, orchestrators, tooling",
+    "skills_prefix": null, "type": "awesome"
+  },
+  {
+    "owner": "BehiSecc", "repo": "awesome-claude-skills",
+    "description": "Community skills with scientific, security, and health domains",
+    "skills_prefix": null, "type": "awesome"
+  },
+  {
+    "owner": "obra", "repo": "superpowers-skills",
+    "description": "20+ battle-tested skills: TDD, debugging, code review, git worktrees, systematic root-cause tracing",
+    "skills_prefix": "skills/", "type": "direct"
+  },
+  {
+    "owner": "trailofbits", "repo": "skills",
+    "description": "22 professional security skills: CodeQL, Semgrep, variant analysis, code auditing, vulnerability detection",
+    "skills_prefix": "skills/", "type": "direct"
+  }
 ]
 ```
+
+**Source `type` field:**
+- `"direct"` — repo directly contains skill directories with SKILL.md files. Scan `skills_prefix` path.
+- `"awesome"` — repo contains a README that links to external skill repos. Parse README → extract linked GitHub repos → offer as expandable tree in UI.
 
 Layout:
 - Left: source repos list (QListWidget) with Add/Remove buttons
@@ -598,14 +637,18 @@ These are embedded in `editor_tab.py` as a dict of template strings, NOT externa
 | `minimal` | Standard skill with Usage and Examples sections |
 | `with-scripts` | Skill that references scripts/ directory |
 | `with-references` | Skill with references/ directory docs |
-| `code-review` | Code review skill template |
-| `documentation` | Documentation generation skill template |
-| `testing` | Test writing and execution skill template |
-| `git-workflow` | Git operations skill template |
-| `web-search` | Web research skill template |
-| `data-analysis` | Data analysis skill template |
-| `security-audit` | Security review skill template |
-| `custom-tool` | Custom tool integration template |
+| `code-review` | Code review skill (based on obra/superpowers pattern) |
+| `documentation` | Documentation generation skill |
+| `testing` | TDD/test writing and execution skill |
+| `git-workflow` | Git operations skill (commit, PR, worktrees) |
+| `web-research` | Web research + article extraction skill |
+| `data-analysis` | CSV/data analysis skill |
+| `security-audit` | Security review skill (OWASP, static analysis pattern) |
+| `custom-tool` | Custom tool/MCP integration template |
+| `devops` | CI/CD, cloud deployment, Docker skill template |
+| `frontend-design` | UI/UX and frontend design constraints skill |
+| `database` | Database query and schema skill (read-only SQL pattern) |
+| `api-integration` | Third-party API integration skill |
 
 ---
 
@@ -722,12 +765,16 @@ This order allows progressive testing. Each phase should be syntax-checked with 
 ## Reference Links
 
 - Official Skills Spec: https://agentskills.io/specification
+- Validation CLI: https://github.com/agentskills/agentskills/tree/main/skills-ref (`skills-ref validate ./my-skill`)
 - Anthropic Skills Overview: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 - Anthropic Skills Examples: https://github.com/anthropics/skills
-- Community Skills: https://github.com/travisvn/awesome-claude-skills
-- More Community: https://github.com/hesreallyhim/awesome-claude-code
-- VoltAgent Skills: https://github.com/VoltAgent/awesome-agent-skills
+- VoltAgent (383+ official team skills): https://github.com/VoltAgent/awesome-agent-skills
+- ComposioHQ (SaaS integrations): https://github.com/ComposioHQ/awesome-claude-skills
+- travisvn (curated + docs): https://github.com/travisvn/awesome-claude-skills
+- hesreallyhim (full ecosystem): https://github.com/hesreallyhim/awesome-claude-code
+- BehiSecc (scientific/security): https://github.com/BehiSecc/awesome-claude-skills
 - Superpowers Skills: https://github.com/obra/superpowers-skills
+- Trail of Bits Security: https://github.com/trailofbits/skills
 
 ---
 
